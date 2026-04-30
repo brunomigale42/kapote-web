@@ -1,225 +1,256 @@
-const {
-  Document, Packer, Paragraph, TextRun, HeadingLevel,
-  AlignmentType, LevelFormat, BorderStyle
-} = require('docx');
-const fs = require('fs');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Política de Privacidad | Kapote Helados</title>
+  <meta name="description" content="Política de privacidad de Kapote Helados. Información sobre el tratamiento de datos personales en kapotehelados.es.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0F0A06;
+      --ink-mid:#2C1A0C;
+      --caramel:#B8722A;
+      --cream:#FBF7F2;
+      --cream-2:#F5EDE0;
+      --parchment:#EDE0CC;
+      --muted:#8B6A4A;
+      --fd:Georgia,serif;
+      --fb:'Outfit',sans-serif;
+    }
 
-const CARAMEL = "B8722A";
-const INK     = "2C1A0C";
-const MUTED   = "6B4E2E";
+    *{box-sizing:border-box;margin:0;padding:0}
 
-const h1 = (text) => new Paragraph({
-  heading: HeadingLevel.HEADING_1,
-  spacing: { before: 360, after: 160 },
-  children: [new TextRun({ text, bold: true, size: 28, color: INK, font: "Arial" })]
-});
+    body{
+      font-family:var(--fb);
+      background:var(--cream);
+      color:var(--ink);
+      line-height:1.75;
+      -webkit-font-smoothing:antialiased;
+    }
 
-const h2 = (text) => new Paragraph({
-  heading: HeadingLevel.HEADING_2,
-  spacing: { before: 280, after: 120 },
-  children: [new TextRun({ text, bold: true, size: 24, color: CARAMEL, font: "Arial" })]
-});
+    .legal-nav{
+      padding:24px 0;
+      background:rgba(251,247,242,.96);
+      border-bottom:1px solid var(--parchment);
+    }
 
-const p = (text, opts = {}) => new Paragraph({
-  spacing: { after: 160 },
-  alignment: AlignmentType.JUSTIFIED,
-  children: [new TextRun({ text, size: 22, color: MUTED, font: "Arial", ...opts })]
-});
+    .w{
+      max-width:980px;
+      margin:0 auto;
+      padding:0 28px;
+    }
 
-const bullet = (text) => new Paragraph({
-  numbering: { reference: "bullets", level: 0 },
-  spacing: { after: 80 },
-  children: [new TextRun({ text, size: 22, color: MUTED, font: "Arial" })]
-});
+    .brand{
+      font-family:var(--fd);
+      font-size:1.7rem;
+      color:var(--ink-mid);
+      text-decoration:none;
+    }
 
-const divider = () => new Paragraph({
-  spacing: { before: 200, after: 200 },
-  border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: "EDE0CC", space: 1 } },
-  children: [new TextRun("")]
-});
+    .brand b{
+      color:var(--caramel);
+      font-weight:400;
+    }
 
-const today = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    main{
+      padding:70px 0 90px;
+    }
 
-const doc = new Document({
-  styles: {
-    default: { document: { run: { font: "Arial", size: 22, color: MUTED } } },
-    paragraphStyles: [
-      {
-        id: "Heading1", name: "Heading 1", basedOn: "Normal", next: "Normal", quickFormat: true,
-        run: { size: 28, bold: true, font: "Arial", color: INK },
-        paragraph: { spacing: { before: 360, after: 160 }, outlineLevel: 0 }
-      },
-      {
-        id: "Heading2", name: "Heading 2", basedOn: "Normal", next: "Normal", quickFormat: true,
-        run: { size: 24, bold: true, font: "Arial", color: CARAMEL },
-        paragraph: { spacing: { before: 280, after: 120 }, outlineLevel: 1 }
-      }
-    ]
-  },
-  numbering: {
-    config: [
-      {
-        reference: "bullets",
-        levels: [{
-          level: 0, format: LevelFormat.BULLET, text: "•",
-          alignment: AlignmentType.LEFT,
-          style: { paragraph: { indent: { left: 720, hanging: 360 } } }
-        }]
-      }
-    ]
-  },
-  sections: [{
-    properties: {
-      page: {
-        size: { width: 11906, height: 16838 },
-        margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
-      }
-    },
-    children: [
+    .eyebrow{
+      font-size:.75rem;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--caramel);
+      margin-bottom:18px;
+    }
 
-      // ── TÍTULO PRINCIPAL ──────────────────────────────────
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { before: 0, after: 80 },
-        children: [new TextRun({ text: "POLÍTICA DE PRIVACIDAD", bold: true, size: 36, color: INK, font: "Arial" })]
-      }),
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "kapotehelados.es", size: 24, color: CARAMEL, font: "Arial" })]
-      }),
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { after: 320 },
-        children: [new TextRun({ text: `Última actualización: ${today}`, size: 20, color: "999999", font: "Arial", italics: true })]
-      }),
-      divider(),
+    h1{
+      font-family:var(--fd);
+      font-size:clamp(2.4rem,5vw,4.2rem);
+      font-weight:400;
+      line-height:1.08;
+      color:var(--ink-mid);
+      margin-bottom:18px;
+    }
 
-      // ── 1. RESPONSABLE ────────────────────────────────────
-      h1("1. Responsable del tratamiento"),
-      p("En cumplimiento del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (RGPD) y de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD), le informamos de que el responsable del tratamiento de los datos personales recabados a través del sitio web kapotehelados.es es:"),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "Titular:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  [NOMBRE Y APELLIDOS] — PENDIENTE DE COMPLETAR", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "NIF:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  [NIF/DNI] — PENDIENTE DE COMPLETAR", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "Domicilio:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  [DIRECCIÓN FISCAL COMPLETA] — PENDIENTE DE COMPLETAR", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "Email:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  [EMAIL OFICIAL] — PENDIENTE DE COMPLETAR", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "Teléfono:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  [TELÉFONO] — PENDIENTE DE COMPLETAR", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: "Web:", bold: true, size: 22, color: INK, font: "Arial" }),
-                   new TextRun({ text: "  https://kapotehelados.es", size: 22, color: MUTED, font: "Arial" })]
-      }),
-      divider(),
+    .updated{
+      color:var(--muted);
+      margin-bottom:42px;
+      font-size:.95rem;
+    }
 
-      // ── 2. DATOS QUE RECOGEMOS ───────────────────────────
-      h1("2. ¿Qué datos personales recogemos?"),
-      p("La presente web no dispone de formularios de registro ni de contacto. No recabamos directamente nombre, email, teléfono ni ningún otro dato personal identificativo a través de la navegación ordinaria."),
-      p("Sin embargo, con motivo del uso de ciertas herramientas técnicas de terceros integradas en la web, pueden recogerse de forma automática los siguientes datos de carácter técnico:"),
-      bullet("Dirección IP del dispositivo desde el que se accede."),
-      bullet("Tipo de navegador y versión."),
-      bullet("Sistema operativo del dispositivo."),
-      bullet("Fecha, hora y duración de la visita."),
-      bullet("Páginas visitadas dentro del sitio web."),
-      bullet("Fuente o referencia desde la que se ha llegado al sitio (p. ej., buscador, red social)."),
-      bullet("Datos de interacción con el contenido (clics, desplazamiento, tiempo de permanencia)."),
-      p("Estos datos son recogidos de forma agregada y, en la mayoría de los casos, no permiten identificar directamente a un usuario concreto. No obstante, en determinadas condiciones y combinados con otros datos, pueden considerarse datos personales a efectos del RGPD."),
-      divider(),
+    h2{
+      font-family:var(--fd);
+      font-size:1.8rem;
+      font-weight:400;
+      color:var(--ink-mid);
+      margin:44px 0 14px;
+    }
 
-      // ── 3. FINALIDADES ───────────────────────────────────
-      h1("3. Finalidades y base jurídica del tratamiento"),
+    p{
+      color:var(--muted);
+      margin-bottom:16px;
+    }
 
-      h2("3.1 Análisis estadístico y mejora del sitio web"),
-      p("Finalidad: Analizar el comportamiento de los usuarios en la web con el objetivo de mejorar la experiencia de navegación, los contenidos y el rendimiento técnico del sitio."),
-      p("Base jurídica: Consentimiento del usuario (art. 6.1.a RGPD), prestado a través del banner de cookies al acceder al sitio web por primera vez."),
-      p("Herramienta utilizada: Google Analytics (Google LLC). Los datos son transferidos a servidores de Google, que actúa como encargado del tratamiento bajo las condiciones de su Política de Privacidad y el Acuerdo de Tratamiento de Datos suscrito con Google."),
+    ul{
+      margin:10px 0 20px 22px;
+      color:var(--muted);
+    }
 
-      h2("3.2 Integración con redes sociales"),
-      p("Finalidad: Mostrar contenido de Instagram integrado en la web y facilitar el acceso al perfil de la marca en redes sociales."),
-      p("Base jurídica: Interés legítimo del responsable en la promoción de sus productos y servicios (art. 6.1.f RGPD)."),
-      p("Nota importante: Cuando el usuario hace clic en los enlaces a redes sociales o interactúa con contenido integrado de Instagram (Meta Platforms Ireland Ltd.), abandona el entorno de kapotehelados.es y queda sujeto a la política de privacidad de la plataforma correspondiente. El responsable no controla ni es responsable del tratamiento de datos que efectúen dichas plataformas en sus propios entornos."),
-      divider(),
+    li{
+      margin-bottom:8px;
+    }
 
-      // ── 4. GOOGLE ANALYTICS ──────────────────────────────
-      h1("4. Google Analytics y transferencias internacionales"),
-      p("Este sitio web utiliza Google Analytics, un servicio de analítica web prestado por Google LLC, con domicilio en 1600 Amphitheatre Parkway, Mountain View, CA 94043, EE. UU."),
-      p("Google Analytics utiliza cookies propias para recopilar información sobre el uso que los visitantes hacen del sitio web. La información generada por la cookie se transmite y almacena en servidores de Google en Estados Unidos."),
-      p("Google LLC está adherida al Marco de Privacidad de Datos UE-EE.UU. (EU-US Data Privacy Framework), certificado reconocido por la Comisión Europea como garantía adecuada para la transferencia internacional de datos personales (Decisión de adecuación de 10 de julio de 2023)."),
-      p("Puede consultar la política de privacidad de Google en: https://policies.google.com/privacy"),
-      p("Para impedir el seguimiento por parte de Google Analytics, puede instalar el complemento de inhabilitación para navegadores disponible en: https://tools.google.com/dlpage/gaoptout"),
-      divider(),
+    a{
+      color:var(--caramel);
+      text-decoration:none;
+      font-weight:600;
+    }
 
-      // ── 5. COOKIES ───────────────────────────────────────
-      h1("5. Política de cookies"),
-      p("Este sitio web utiliza cookies y tecnologías similares. Para información detallada sobre las cookies utilizadas, su finalidad, duración y cómo gestionarlas o revocar el consentimiento, consulte nuestra Política de Cookies, accesible desde el pie de página del sitio web."),
-      divider(),
+    a:hover{
+      text-decoration:underline;
+    }
 
-      // ── 6. CONSERVACIÓN ──────────────────────────────────
-      h1("6. Plazos de conservación de los datos"),
-      p("Los datos de navegación recogidos a través de Google Analytics se conservan durante un período máximo de 14 meses, configurado en la cuenta de Google Analytics, tras lo cual son eliminados o anonimizados de forma automática."),
-      p("Los datos asociados a cookies de sesión se eliminan al cerrar el navegador. Las cookies persistentes se eliminan en los plazos indicados en la Política de Cookies."),
-      divider(),
+    .box{
+      background:var(--cream-2);
+      border:1px solid var(--parchment);
+      border-radius:18px;
+      padding:24px;
+      margin:28px 0;
+    }
 
-      // ── 7. DERECHOS ──────────────────────────────────────
-      h1("7. Derechos de los interesados"),
-      p("De conformidad con el RGPD y la LOPDGDD, los usuarios tienen derecho a ejercer los siguientes derechos en relación con sus datos personales:"),
-      bullet("Derecho de acceso: conocer qué datos personales suyos están siendo tratados."),
-      bullet("Derecho de rectificación: solicitar la corrección de datos inexactos o incompletos."),
-      bullet("Derecho de supresión (\"derecho al olvido\"): solicitar la eliminación de sus datos cuando ya no sean necesarios para la finalidad para la que fueron recogidos."),
-      bullet("Derecho de oposición: oponerse al tratamiento de sus datos en cualquier momento."),
-      bullet("Derecho a la limitación del tratamiento: solicitar que se restrinja el tratamiento de sus datos en determinadas circunstancias."),
-      bullet("Derecho a la portabilidad: recibir sus datos en un formato estructurado, de uso común y lectura mecánica."),
-      bullet("Derecho a retirar el consentimiento en cualquier momento, sin que ello afecte a la licitud del tratamiento basado en el consentimiento previo a su retirada."),
-      p("Para ejercer cualquiera de estos derechos, puede dirigirse al responsable del tratamiento a través del email: [EMAIL OFICIAL] — PENDIENTE DE COMPLETAR, adjuntando copia de su documento de identidad."),
-      p("Asimismo, tiene derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD), autoridad de control competente, a través de su sede electrónica: www.aepd.es"),
-      divider(),
+    .back{
+      display:inline-flex;
+      margin-top:44px;
+      padding:12px 22px;
+      border-radius:999px;
+      background:var(--caramel);
+      color:white;
+      text-decoration:none;
+      font-size:.82rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
 
-      // ── 8. MENORES ───────────────────────────────────────
-      h1("8. Menores de edad"),
-      p("Este sitio web no está dirigido a menores de 14 años ni recaba conscientemente datos personales de menores. Si el responsable tuviera conocimiento de que se han recabado datos de un menor sin el consentimiento de sus progenitores o tutores, procederá a su eliminación inmediata."),
-      divider(),
+    .back:hover{
+      text-decoration:none;
+      background:var(--ink-mid);
+    }
 
-      // ── 9. SEGURIDAD ─────────────────────────────────────
-      h1("9. Medidas de seguridad"),
-      p("El responsable ha adoptado las medidas técnicas y organizativas necesarias para garantizar la seguridad e integridad de los datos personales y evitar su alteración, pérdida, tratamiento o acceso no autorizado, habida cuenta del estado de la tecnología, la naturaleza de los datos almacenados y los riesgos a que están expuestos."),
-      p("El sitio web utiliza protocolo HTTPS con cifrado SSL/TLS para garantizar la seguridad en las comunicaciones entre el navegador del usuario y el servidor."),
-      divider(),
+    footer{
+      border-top:1px solid var(--parchment);
+      padding:28px 0;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+  </style>
+</head>
+<body>
 
-      // ── 10. ACTUALIZACIÓN ────────────────────────────────
-      h1("10. Actualización de la política de privacidad"),
-      p("El responsable se reserva el derecho a modificar la presente Política de Privacidad para adaptarla a novedades legislativas, jurisprudenciales o de práctica empresarial. En caso de modificaciones sustanciales, se informará al usuario a través de un aviso visible en el sitio web."),
-      p(`La presente Política de Privacidad fue actualizada por última vez el ${today}.`),
-      divider(),
+  <header class="legal-nav">
+    <div class="w">
+      <a href="index.html" class="brand">Kapote<b>.</b></a>
+    </div>
+  </header>
 
-      // ── PIE ───────────────────────────────────────────────
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        spacing: { before: 400 },
-        children: [new TextRun({ text: "Kapote Helados · kapotehelados.es", size: 18, color: "999999", font: "Arial", italics: true })]
-      }),
-    ]
-  }]
-});
+  <main>
+    <div class="w">
+      <div class="eyebrow">Información legal</div>
+      <h1>Política de Privacidad</h1>
+      <p class="updated">Última actualización: abril de 2026</p>
 
-Packer.toBuffer(doc).then(buf => {
-  fs.writeFileSync('/home/claude/politica-privacidad-kapote.docx', buf);
-  console.log('OK');
-});
+      <div class="box">
+        <p>Esta Política de Privacidad informa sobre cómo se tratan los datos personales relacionados con el uso del sitio web <strong>kapotehelados.es</strong>.</p>
+      </div>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <p>En cumplimiento del Reglamento (UE) 2016/679, Reglamento General de Protección de Datos, y de la Ley Orgánica 3/2018, de Protección de Datos Personales y garantía de los derechos digitales, se informa de que el responsable del tratamiento de los datos personales es:</p>
+
+      <ul>
+        <li><strong>Responsable:</strong> Martin Creiscell</li>
+        <li><strong>NIF/NIE:</strong> X5134497T</li>
+        <li><strong>Domicilio:</strong> Tarragona 5, 08397 Pineda de Mar, Barcelona</li>
+        <li><strong>Email de contacto:</strong> <a href="mailto:kapotehelados@gmail.com">kapotehelados@gmail.com</a></li>
+        <li><strong>Teléfono:</strong> <a href="tel:+34649338251">+34 649 33 82 51</a></li>
+      </ul>
+
+      <h2>2. Datos personales tratados</h2>
+      <p>La web kapotehelados.es no dispone de formularios de registro, cuentas de usuario ni sistema propio de pedidos online. Por tanto, no recoge directamente datos personales a través de formularios web.</p>
+      <p>No obstante, si el usuario contacta voluntariamente por email, teléfono, redes sociales o plataformas externas enlazadas desde la web, podrán tratarse los datos necesarios para atender su consulta, como nombre, email, teléfono, perfil de usuario o contenido del mensaje.</p>
+
+      <h2>3. Finalidades del tratamiento</h2>
+      <p>Los datos personales que el usuario facilite voluntariamente podrán tratarse con las siguientes finalidades:</p>
+
+      <ul>
+        <li>Atender consultas recibidas por email, teléfono o redes sociales.</li>
+        <li>Gestionar solicitudes de información sobre locales, productos, pedidos o posibles consultas de franquicia.</li>
+        <li>Mantener comunicaciones relacionadas con la consulta realizada por el usuario.</li>
+        <li>Gestionar relaciones comerciales o precontractuales cuando el usuario solicite información sobre oportunidades de colaboración o expansión.</li>
+      </ul>
+
+      <h2>4. Base jurídica del tratamiento</h2>
+      <p>La base jurídica para el tratamiento de los datos es el consentimiento del usuario cuando contacta voluntariamente con Kapote Helados a través de los canales indicados.</p>
+      <p>En caso de consultas comerciales, de colaboración o de posible franquicia, la base jurídica también podrá ser la aplicación de medidas precontractuales solicitadas por el interesado.</p>
+
+      <h2>5. Conservación de los datos</h2>
+      <p>Los datos personales se conservarán durante el tiempo necesario para atender la consulta o gestionar la relación iniciada por el usuario.</p>
+      <p>Posteriormente, podrán conservarse bloqueados durante los plazos legalmente exigibles para atender posibles responsabilidades derivadas del tratamiento.</p>
+
+      <h2>6. Comunicación de datos a terceros</h2>
+      <p>Los datos personales no se cederán a terceros salvo obligación legal o cuando resulte necesario para atender la solicitud del usuario.</p>
+      <p>La web contiene enlaces a plataformas externas como Google Maps, Glovo, Instagram y Facebook. Cuando el usuario accede a dichas plataformas, el tratamiento de datos queda sujeto a sus propias políticas de privacidad.</p>
+
+      <h2>7. Plataformas externas enlazadas</h2>
+      <p>Kapote Helados utiliza enlaces externos para facilitar el acceso a servicios de terceros:</p>
+
+      <ul>
+        <li><strong>Google Maps:</strong> para mostrar o abrir ubicaciones de los locales.</li>
+        <li><strong>Glovo:</strong> para permitir al usuario acceder a la plataforma externa de pedidos a domicilio.</li>
+        <li><strong>Instagram y Facebook:</strong> para acceder a perfiles sociales de Kapote Helados.</li>
+      </ul>
+
+      <p>Kapote Helados no controla ni es responsable del tratamiento de datos que dichas plataformas realicen en sus propios entornos.</p>
+
+      <h2>8. Derechos de los usuarios</h2>
+      <p>El usuario puede ejercer los siguientes derechos en materia de protección de datos:</p>
+
+      <ul>
+        <li>Derecho de acceso a sus datos personales.</li>
+        <li>Derecho de rectificación de datos inexactos o incompletos.</li>
+        <li>Derecho de supresión de sus datos cuando proceda.</li>
+        <li>Derecho de oposición al tratamiento.</li>
+        <li>Derecho a la limitación del tratamiento.</li>
+        <li>Derecho a la portabilidad de los datos, cuando sea aplicable.</li>
+        <li>Derecho a retirar el consentimiento en cualquier momento.</li>
+      </ul>
+
+      <p>Para ejercer estos derechos, el usuario puede enviar una solicitud a <a href="mailto:kapotehelados@gmail.com">kapotehelados@gmail.com</a>, indicando el derecho que desea ejercer y acompañando, si fuera necesario, copia de un documento identificativo.</p>
+
+      <h2>9. Reclamaciones ante la autoridad de control</h2>
+      <p>Si el usuario considera que el tratamiento de sus datos personales no se ajusta a la normativa vigente, puede presentar una reclamación ante la Agencia Española de Protección de Datos.</p>
+      <p>Puede obtener más información en <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>.</p>
+
+      <h2>10. Seguridad de los datos</h2>
+      <p>Kapote Helados adoptará las medidas técnicas y organizativas necesarias para proteger los datos personales frente a accesos no autorizados, pérdida, alteración o divulgación indebida.</p>
+
+      <h2>11. Cambios en la Política de Privacidad</h2>
+      <p>Kapote Helados podrá actualizar esta Política de Privacidad para adaptarla a cambios normativos, técnicos o de funcionamiento del sitio web.</p>
+      <p>En caso de cambios relevantes, se actualizará la fecha indicada al inicio de esta página.</p>
+
+      <a href="index.html.html" class="back">Volver a la web</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="w">
+      Kapote Helados · kapotehelados.es
+    </div>
+  </footer>
+
+</body>
+</html>
