@@ -177,11 +177,9 @@
 
 /* DELIVERY */
 .delivery{padding:110px 0;background:var(--cream-2);position:relative;overflow:hidden}
-.delivery::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 10% 50%,rgba(184,114,42,.06) 0%,transparent 50%)}
-.dg{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-
+.delivery::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 10% 50%,rgba(184,114,42,.06) 0%,transparent 50%);pointer-events:none}
+.dg{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .dv{position:relative}
-
 .delivery-slider{
   aspect-ratio:1;
   border-radius:var(--rxl);
