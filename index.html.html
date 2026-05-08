@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZBDGF7YJ2T"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-ZBDGF7YJ2T');
-  </script>
+<!-- Google tag (gtag.js) con consentimiento -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZBDGF7YJ2T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied'
+  });
+
+  gtag('js', new Date());
+  gtag('config', 'G-ZBDGF7YJ2T');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kapote Helados | Heladería artesanal en Pineda de Mar y Calella, Maresme.</title>
@@ -429,6 +437,82 @@
     font-size:1.6rem;
     line-height:1;
     font-weight:400;
+  }
+}
+.cookie-banner{
+  position:fixed;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:1200;
+  max-width:760px;
+  margin:0 auto;
+  display:none;
+  align-items:center;
+  gap:18px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(15,10,6,.96);
+  color:var(--cream);
+  box-shadow:0 18px 60px rgba(0,0,0,.28);
+}
+
+.cookie-banner.show{
+  display:flex;
+}
+
+.cookie-text{
+  flex:1;
+  font-size:.86rem;
+  line-height:1.55;
+  color:rgba(251,247,242,.78);
+}
+
+.cookie-text a{
+  color:var(--caramel);
+  text-decoration:underline;
+}
+
+.cookie-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.cookie-btn{
+  border:0;
+  border-radius:999px;
+  padding:11px 18px;
+  font-family:var(--fb);
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.cookie-accept{
+  background:#F97316;
+  color:white;
+}
+
+.cookie-reject{
+  background:rgba(255,255,255,.1);
+  color:rgba(251,247,242,.78);
+}
+
+@media(max-width:640px){
+  .cookie-banner{
+    flex-direction:column;
+    align-items:stretch;
+    left:12px;
+    right:12px;
+    bottom:12px;
+  }
+
+  .cookie-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
   }
 }
 
@@ -999,6 +1083,18 @@ if(heroSlides.length){
     showHeroSlide(heroIndex);
   }, 4000);
 }
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    Usamos cookies analíticas de Google Analytics para entender cómo se utiliza la web y mejorarla. Puedes aceptar o rechazar su uso.
+    <a href="cookies.html">Más información</a>
+  </div>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
+    <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
+  </div>
+</div>
+
 // Mobile sticky CTA
 const mobileCta = document.getElementById('mobileCta');
 const mobileCtaClose = document.getElementById('mobileCtaClose');
@@ -1054,6 +1150,46 @@ function updateDeliveryStatus(){
 }
 
 updateDeliveryStatus();
+// Cookie consent
+const cookieBanner = document.getElementById('cookieBanner');
+const acceptCookies = document.getElementById('acceptCookies');
+const rejectCookies = document.getElementById('rejectCookies');
+
+function applyAnalyticsConsent(value){
+  gtag('consent', 'update', {
+    analytics_storage: value,
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied'
+  });
+}
+
+const cookieChoice = localStorage.getItem('kapoteCookieConsent');
+
+if(cookieChoice === 'accepted'){
+  applyAnalyticsConsent('granted');
+}else if(cookieChoice === 'rejected'){
+  applyAnalyticsConsent('denied');
+}else if(cookieBanner){
+  cookieBanner.classList.add('show');
+}
+
+if(acceptCookies){
+  acceptCookies.addEventListener('click', () => {
+    localStorage.setItem('kapoteCookieConsent', 'accepted');
+    applyAnalyticsConsent('granted');
+    cookieBanner.classList.remove('show');
+  });
+}
+
+if(rejectCookies){
+  rejectCookies.addEventListener('click', () => {
+    localStorage.setItem('kapoteCookieConsent', 'rejected');
+    applyAnalyticsConsent('denied');
+    cookieBanner.classList.remove('show');
+  });
+}
+
 </script>
 </body>
 </html>
