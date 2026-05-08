@@ -992,61 +992,126 @@
   <button class="mobile-cta-close" id="mobileCtaClose" aria-label="Cerrar">×</button>
 </div>
 
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    Usamos cookies analíticas de Google Analytics para entender cómo se utiliza la web y mejorarla. Puedes aceptar o rechazar su uso.
+    <a href="cookies.html">Más información</a>
+  </div>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
+    <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
+  </div>
+</div>
+
 <script>
 // Custom cursor
-const cur=document.getElementById('cur'),cr=document.getElementById('cr');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=(mx-5)+'px';cur.style.top=(my-5)+'px';
-});
-(function loop(){
-  rx+=(mx-rx-18)*.12;ry+=(my-ry-18)*.12;
-  cr.style.left=rx+'px';cr.style.top=ry+'px';
-  requestAnimationFrame(loop);
-})();
-document.querySelectorAll('a,button,.fc,.pc,.tc,.frbe,.af,.gc,.lc').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(2)';cr.style.width='60px';cr.style.height='60px';cr.style.opacity='.3'});
-  el.addEventListener('mouseleave',()=>{cur.style.transform='none';cr.style.width='36px';cr.style.height='36px';cr.style.opacity='.5'});
-});
+const cur = document.getElementById('cur');
+const cr = document.getElementById('cr');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+if(cur && cr){
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    cur.style.left = (mx - 5) + 'px';
+    cur.style.top = (my - 5) + 'px';
+  });
+
+  (function loop(){
+    rx += (mx - rx - 18) * .12;
+    ry += (my - ry - 18) * .12;
+    cr.style.left = rx + 'px';
+    cr.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  document.querySelectorAll('a,button,.fc,.pc,.tc,.frbe,.af,.gc,.lc').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.style.transform = 'scale(2)';
+      cr.style.width = '60px';
+      cr.style.height = '60px';
+      cr.style.opacity = '.3';
+    });
+
+    el.addEventListener('mouseleave', () => {
+      cur.style.transform = 'none';
+      cr.style.width = '36px';
+      cr.style.height = '36px';
+      cr.style.opacity = '.5';
+    });
+  });
+}
 
 // Navbar
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60),{passive:true});
+const nav = document.getElementById('nav');
+
+if(nav){
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('stuck', scrollY > 60);
+  }, { passive:true });
+}
 
 // Mobile menu
-const bgr=document.getElementById('bgr'),mn=document.getElementById('mn');
-bgr.addEventListener('click',()=>{
-  const o=mn.classList.toggle('open');
-  bgr.setAttribute('aria-expanded',o);
-  document.body.style.overflow=o?'hidden':'';
-  bgr.children[0].style.transform=o?'translateY(6.5px) rotate(45deg)':'';
-  bgr.children[1].style.opacity=o?'0':'1';
-  bgr.children[2].style.transform=o?'translateY(-6.5px) rotate(-45deg)':'';
-});
-document.querySelectorAll('.ml,.mc').forEach(a=>a.addEventListener('click',()=>{
-  mn.classList.remove('open');bgr.setAttribute('aria-expanded','false');
-  document.body.style.overflow='';
-  bgr.children[0].style.transform='';bgr.children[1].style.opacity='1';bgr.children[2].style.transform='';
-}));
+const bgr = document.getElementById('bgr');
+const mn = document.getElementById('mn');
+
+if(bgr && mn){
+  bgr.addEventListener('click', () => {
+    const o = mn.classList.toggle('open');
+    bgr.setAttribute('aria-expanded', o);
+    document.body.style.overflow = o ? 'hidden' : '';
+    bgr.children[0].style.transform = o ? 'translateY(6.5px) rotate(45deg)' : '';
+    bgr.children[1].style.opacity = o ? '0' : '1';
+    bgr.children[2].style.transform = o ? 'translateY(-6.5px) rotate(-45deg)' : '';
+  });
+
+  document.querySelectorAll('.ml,.mc').forEach(a => {
+    a.addEventListener('click', () => {
+      mn.classList.remove('open');
+      bgr.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      bgr.children[0].style.transform = '';
+      bgr.children[1].style.opacity = '1';
+      bgr.children[2].style.transform = '';
+    });
+  });
+}
 
 // Reveal
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => {
+    if(x.isIntersecting){
+      x.target.classList.add('in');
+      obs.unobserve(x.target);
+    }
+  });
+}, { threshold:.1, rootMargin:'0px 0px -40px 0px' });
+
+document.querySelectorAll('.rv').forEach(el => obs.observe(el));
 
 // Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+
+    if(t){
+      e.preventDefault();
+      t.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
   });
 });
 
 // Product btn
-document.querySelectorAll('.pbtn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    b.textContent='✓';b.style.background='var(--sage)';
-    setTimeout(()=>{b.textContent='+';b.style.background='var(--caramel)'},1400);
+document.querySelectorAll('.pbtn').forEach(b => {
+  b.addEventListener('click', () => {
+    b.textContent = '✓';
+    b.style.background = 'var(--sage)';
+
+    setTimeout(() => {
+      b.textContent = '+';
+      b.style.background = 'var(--caramel)';
+    }, 1400);
   });
 });
 
@@ -1083,6 +1148,7 @@ if(heroSlides.length){
     showHeroSlide(heroIndex);
   }, 4000);
 }
+
 // Mobile sticky CTA
 const mobileCta = document.getElementById('mobileCta');
 const mobileCtaClose = document.getElementById('mobileCtaClose');
@@ -1107,30 +1173,6 @@ if(mobileCta && mobileCtaClose){
   window.addEventListener('resize', updateMobileCta);
   updateMobileCta();
 }
-  <!-- MOBILE STICKY CTA -->
-<div class="mobile-cta" id="mobileCta">
-  <a href="https://glovoapp.com/es/es/calella/kapote-helados-calella-malgrat-de-mar-santa-susanna/"
-     target="_blank"
-     rel="noopener"
-     class="mobile-cta-btn">
-    Pedir ahora 🍦
-  </a>
-  <button class="mobile-cta-close" id="mobileCtaClose" aria-label="Cerrar">×</button>
-</div>
-
-<!-- COOKIE BANNER -->
-<div class="cookie-banner" id="cookieBanner">
-  <div class="cookie-text">
-    Usamos cookies analíticas de Google Analytics para entender cómo se utiliza la web y mejorarla. Puedes aceptar o rechazar su uso.
-    <a href="cookies.html">Más información</a>
-  </div>
-  <div class="cookie-actions">
-    <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
-    <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
-  </div>
-</div>
-
-<script>
 
 // Delivery status Europe/Madrid
 function updateDeliveryStatus(){
@@ -1163,12 +1205,15 @@ function updateDeliveryStatus(){
 }
 
 updateDeliveryStatus();
+
 // Cookie consent
 const cookieBanner = document.getElementById('cookieBanner');
 const acceptCookies = document.getElementById('acceptCookies');
 const rejectCookies = document.getElementById('rejectCookies');
 
 function applyAnalyticsConsent(value){
+  if(typeof gtag !== 'function') return;
+
   gtag('consent', 'update', {
     analytics_storage: value,
     ad_storage: 'denied',
@@ -1187,7 +1232,7 @@ if(cookieChoice === 'accepted'){
   cookieBanner.classList.add('show');
 }
 
-if(acceptCookies){
+if(acceptCookies && cookieBanner){
   acceptCookies.addEventListener('click', () => {
     localStorage.setItem('kapoteCookieConsent', 'accepted');
     applyAnalyticsConsent('granted');
@@ -1195,14 +1240,13 @@ if(acceptCookies){
   });
 }
 
-if(rejectCookies){
+if(rejectCookies && cookieBanner){
   rejectCookies.addEventListener('click', () => {
     localStorage.setItem('kapoteCookieConsent', 'rejected');
     applyAnalyticsConsent('denied');
     cookieBanner.classList.remove('show');
   });
 }
-
 </script>
 </body>
 </html>
