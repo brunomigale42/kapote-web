@@ -1083,18 +1083,6 @@ if(heroSlides.length){
     showHeroSlide(heroIndex);
   }, 4000);
 }
-<!-- COOKIE BANNER -->
-<div class="cookie-banner" id="cookieBanner">
-  <div class="cookie-text">
-    Usamos cookies analíticas de Google Analytics para entender cómo se utiliza la web y mejorarla. Puedes aceptar o rechazar su uso.
-    <a href="cookies.html">Más información</a>
-  </div>
-  <div class="cookie-actions">
-    <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
-    <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
-  </div>
-</div>
-
 // Mobile sticky CTA
 const mobileCta = document.getElementById('mobileCta');
 const mobileCtaClose = document.getElementById('mobileCtaClose');
@@ -1119,6 +1107,31 @@ if(mobileCta && mobileCtaClose){
   window.addEventListener('resize', updateMobileCta);
   updateMobileCta();
 }
+  <!-- MOBILE STICKY CTA -->
+<div class="mobile-cta" id="mobileCta">
+  <a href="https://glovoapp.com/es/es/calella/kapote-helados-calella-malgrat-de-mar-santa-susanna/"
+     target="_blank"
+     rel="noopener"
+     class="mobile-cta-btn">
+    Pedir ahora 🍦
+  </a>
+  <button class="mobile-cta-close" id="mobileCtaClose" aria-label="Cerrar">×</button>
+</div>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    Usamos cookies analíticas de Google Analytics para entender cómo se utiliza la web y mejorarla. Puedes aceptar o rechazar su uso.
+    <a href="cookies.html">Más información</a>
+  </div>
+  <div class="cookie-actions">
+    <button class="cookie-btn cookie-reject" id="rejectCookies">Rechazar</button>
+    <button class="cookie-btn cookie-accept" id="acceptCookies">Aceptar</button>
+  </div>
+</div>
+
+<script>
+
 // Delivery status Europe/Madrid
 function updateDeliveryStatus(){
   const statusText = document.getElementById('deliveryStatusText');
